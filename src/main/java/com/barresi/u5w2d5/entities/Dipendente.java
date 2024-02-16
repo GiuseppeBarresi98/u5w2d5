@@ -23,6 +23,7 @@ public class Dipendente {
     private String nome;
     private String cognome;
     private String email;
+    private String avatar;
 
     @OneToMany(mappedBy = "dipendente")
     private List<Dispositivo> lista_dispositivi;
