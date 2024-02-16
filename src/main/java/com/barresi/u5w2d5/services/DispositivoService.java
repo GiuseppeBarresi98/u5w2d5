@@ -23,6 +23,8 @@ public class DispositivoService {
     @Autowired
     DispositivoDAO dispositivoDAO;
 
+    @Autowired
+    DipendenteService dipendenteService;
     public Page<Dispositivo> getListaDispositivi(int pageNumber, int size, String orderBy) {
         if(size < 100 ) size = 100;
         Pageable pageable = PageRequest.of(pageNumber,size, Sort.by(orderBy));
@@ -52,4 +54,15 @@ public class DispositivoService {
         dispositivoDAO.delete(found);
     }
 
+    public Dispositivo assignDispositivo(UUID id,NewDispositivoDTO dispositivoDTO){
+        Dispositivo found = findDispositivoById(id);
+        Dipendente dipendentefound = dipendenteService.findDipendenteById(dispositivoDTO.getDipendente_id());
+        if(found.getStato().equals("manutenzione")){
+            throw new IllegalStateException("Il dispositivo è in manutenzione e non può essere assegnato.");
+        }
+        else {
+            found.setDipendente(dipendentefound);
+            return dispositivoDAO.save(found);
+        }
+    }
 }

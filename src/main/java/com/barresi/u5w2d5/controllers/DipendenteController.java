@@ -56,4 +56,8 @@ public class DipendenteController {
     public String uploadImg(@PathVariable UUID id, @RequestParam("image")MultipartFile image) throws IOException{
         return dipendenteService.updateImg(id,image);
     }
+
+
+
+
 }
