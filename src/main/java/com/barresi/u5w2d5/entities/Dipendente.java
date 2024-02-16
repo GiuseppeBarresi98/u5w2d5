@@ -1,5 +1,6 @@
 package com.barresi.u5w2d5.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -25,6 +26,7 @@ public class Dipendente {
     private String email;
     private String avatar;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "dipendente")
     private List<Dispositivo> lista_dispositivi;
 

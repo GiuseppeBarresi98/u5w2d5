@@ -5,19 +5,30 @@ import com.barresi.u5w2d5.entities.Dipendente;
 import com.barresi.u5w2d5.exceptions.NotFoundException;
 import com.barresi.u5w2d5.payloads.NewDipendenteDTO;
 import com.barresi.u5w2d5.repositories.DipendenteDAO;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+import org.slf4j.ILoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.UUID;
+
+import static org.hibernate.sql.ast.SqlTreeCreationLogger.LOGGER;
 
 @Service
 public class DipendenteService {
     @Autowired
     DipendenteDAO dipendenteDAO;
+
+    @Autowired
+    Cloudinary cloudinaryUploader;
 
     public Page<Dipendente> getListaDipendenti(int pageNumber,int size,String orderBy) {
         if(size < 100 ) size = 100;
@@ -26,6 +37,7 @@ public class DipendenteService {
     }
 
     public Dipendente findDipendenteById(UUID id){
+        LOGGER.info(id);
         return dipendenteDAO.findById(id).orElseThrow(()-> new NotFoundException(id));
     }
 
@@ -45,5 +57,18 @@ public class DipendenteService {
         found.setCognome(dipendeteDTO.getCognome());
         found.setEmail(dipendeteDTO.getEmail());
         return dipendenteDAO.save(found);
+    }
+
+    public void deleteDipendente(UUID dipendenteID){
+        Dipendente found = this.findDipendenteById(dipendenteID);
+        dipendenteDAO.delete(found);
+    }
+
+    public String updateImg(UUID id, MultipartFile image) throws IOException {
+        Dipendente found = this.findDipendenteById(id);
+        String url = (String) cloudinaryUploader.uploader().upload(image.getBytes(), ObjectUtils.emptyMap()).get("url");
+        found.setAvatar(url);
+        dipendenteDAO.save(found);
+        return url;
     }
 }

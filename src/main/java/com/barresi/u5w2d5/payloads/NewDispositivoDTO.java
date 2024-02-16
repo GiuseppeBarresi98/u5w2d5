@@ -15,5 +15,5 @@ public class NewDispositivoDTO {
     @NotEmpty(message = "Lo stato è obbligatorio")
     private String stato;
 
-    private String username_dipendente;
+    private UUID dipendente_id;
 }
