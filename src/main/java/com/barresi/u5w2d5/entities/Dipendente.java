@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Setter
 @Getter
-@ToString
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -25,6 +25,7 @@ public class Dipendente {
     private String cognome;
     private String email;
     private String avatar;
+    private String password;
 
     @JsonIgnore
     @OneToMany(mappedBy = "dipendente")
@@ -37,6 +38,15 @@ public class Dipendente {
         this.email = email;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Dipendente{" +
+                "username='" + username + '\'' +
+                ", nome='" + nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                ", email='" + email + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

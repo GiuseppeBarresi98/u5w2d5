@@ -48,6 +48,7 @@ public class DipendenteService {
         dipendente.setCognome(newDipendente.getCognome());
         dipendente.setUsername(newDipendente.getUsername());
         dipendente.setEmail(newDipendente.getEmail());
+        dipendente.setPassword(newDipendente.getPassword());
         return dipendenteDAO.save(dipendente);
     }
 
@@ -71,6 +72,10 @@ public class DipendenteService {
         found.setAvatar(url);
         dipendenteDAO.save(found);
         return url;
+    }
+
+    public Dipendente findByemail(String email){
+        return dipendenteDAO.findByEmail(email).orElseThrow(()-> new NotFoundException(email));
     }
 
 

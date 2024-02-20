@@ -23,4 +23,7 @@ public class NewDipendenteDTO {
 
     @NotEmpty(message = "L'email è obbligatoria")
     private String email;
+
+    @NotEmpty(message = "La password è obbligatoria")
+    private String password;
 }

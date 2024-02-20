@@ -1,6 +1,7 @@
 package com.barresi.u5w2d5.exceptions;
 
 
+import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -39,5 +40,12 @@ public class ExceptionsHandler {
     public ErrorsPayload handleGenericErrors(Exception ex) {
         ex.printStackTrace();
         return new ErrorsPayload("Server-side issue, we'll fix it shortly! ", LocalDateTime.now());
+    }
+
+
+    @ExceptionHandler(AuthenticationException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorsPayload handleUnathorized(UnauthorizedException ex){
+        return new ErrorsPayload(ex.getMessage(),LocalDateTime.now());
     }
 }

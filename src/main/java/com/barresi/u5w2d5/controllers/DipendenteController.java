@@ -27,14 +27,6 @@ public class DipendenteController {
         return dipendenteService.getListaDipendenti(pagina, size, orderBy);
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Dipendente saveDipendente(@RequestBody @Validated NewDipendenteDTO dipendenteDTO, BindingResult validation){
-        if (validation.hasErrors()){
-            throw new BadRequestException(validation.getAllErrors());
-        }
-        return dipendenteService.saveDipendente(dipendenteDTO);
-    }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
