@@ -11,6 +11,7 @@ import com.barresi.u5w2d5.services.DispositivoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -53,6 +54,7 @@ public class DispositivoController {
     }
 
     @PostMapping("/{id}/assegna-dispositivo")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Dispositivo assignDispositivo(@PathVariable UUID id,@RequestBody NewDispositivoDTO dispositivoDTO) {
        return dispositivoService.assignDispositivo(id, dispositivoDTO);
     }

@@ -35,7 +35,7 @@ public class JWTFilter extends OncePerRequestFilter {
     }
     else {
         String accessToken = authHeader.substring(7);
-        System.out.println("ACCESS TOKENNNNNN " + accessToken);
+        System.out.println("ACCESS TOKEN" + accessToken);
 
         jwtTools.verifyToken(accessToken);
         String id = jwtTools.getIDfromtoken(accessToken);

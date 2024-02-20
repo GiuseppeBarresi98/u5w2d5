@@ -35,7 +35,7 @@ public class AuthController {
         if (validation.hasErrors()){
             throw new BadRequestException(validation.getAllErrors());
         }
-        return dipendenteService.saveDipendente(dipendenteDTO);
+        return authService.saveDipendente(dipendenteDTO);
     }
 
 
